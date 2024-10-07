@@ -10,6 +10,7 @@ import { Match } from './match/entities/match.entity';
 import { Tournament } from './tournament/entities/tournament.entity';
 import { Player } from './player/entities/player.entity';
 import { ResultsModule } from './results/results.module';
+import { TournamentScoreModule } from './tournament-score/tournament-score.module';
 
 
 @Module({
@@ -32,7 +33,7 @@ import { ResultsModule } from './results/results.module';
         },
       }),
     }),
-    PlayerModule, TournamentModule, MatchModule, TournamentEventModule, AuthModule, ResultsModule],
+    PlayerModule, TournamentModule, MatchModule, TournamentEventModule, AuthModule, ResultsModule, TournamentScoreModule],
   controllers: [],
   providers: [],
 })

@@ -1,5 +1,5 @@
 import { Match } from "src/match/entities/match.entity";
-import { TournamentScores } from "src/tournament-scores/entities/tournament-scores.entity"; // Asegúrate de tener esta entidad
+import { TournamentScore } from "src/tournament-score/entities/tournament-score.entity"; // Asegúrate de tener esta entidad
 import { Entity, OneToMany, PrimaryGeneratedColumn, Column } from "typeorm";
 
 @Entity()
@@ -20,6 +20,6 @@ export class Tournament {
     @OneToMany(() => Match, (match) => match.tournament)
     matches: Match[];
 
-    @OneToMany(() => TournamentScores, (tournamentScore) => tournamentScore.tournament)
-    tournamentScores: TournamentScores[];
+    @OneToMany(() => TournamentScore, (tournamentScore) => tournamentScore.tournament)
+    tournamentScores: TournamentScore[]; 
 }

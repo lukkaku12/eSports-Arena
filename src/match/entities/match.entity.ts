@@ -11,20 +11,20 @@ export class Match {
     @Column()
     status: string;
 
-    @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' }) // Genera automáticamente la fecha de creación
+    @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' }) 
     created_at: Date;
 
-    // Relación con el torneo
+    
     @ManyToOne(() => Tournament, (tournament) => tournament.matches)
     tournament: Tournament;
 
-    // Relación con Player 1 (One-to-One)
+    
     @OneToOne(() => Player)
-    @JoinColumn({ name: 'player_1_id' }) // Especifica la columna que almacenará el ID de Player 1
+    @JoinColumn({ name: 'player_1_id' }) 
     player1: Player;
 
-    // Relación con Player 2 (One-to-One)
+   
     @OneToOne(() => Player)
-    @JoinColumn({ name: 'player_2_id' }) // Especifica la columna que almacenará el ID de Player 2
+    @JoinColumn({ name: 'player_2_id' })
     player2: Player;
 }

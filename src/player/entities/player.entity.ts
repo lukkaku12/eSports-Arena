@@ -1,24 +1,23 @@
-import { Match } from "src/match/entities/match.entity";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from "typeorm";
+import { TournamentScore } from "src/tournament-score/entities/tournament-score.entity"; // Asegúrate de que la ruta sea correcta
 
 @Entity()
 export class Player {
-
     @PrimaryGeneratedColumn()
     id: number;
 
     @Column()
     name: string;
 
-    @Column()
+    @Column({ unique: true })
     email: string;
 
     @Column()
     password: string;
 
-    @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' }) // Generar automáticamente la fecha de creación
+    @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' }) 
     created_at: Date;
 
-    // No es necesario incluir la relación inversa hacia el match aquí
-    // ya que en la entidad Match es donde se establecen las relaciones específicas
+    @OneToMany(() => TournamentScore, (tournamentScore) => tournamentScore.player)
+    tournamentScores: TournamentScore[]; 
 }
