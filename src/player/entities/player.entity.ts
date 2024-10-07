@@ -1,5 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from "typeorm";
 import { TournamentScore } from "src/tournament-score/entities/tournament-score.entity"; // Asegúrate de que la ruta sea correcta
+import { TournamentEvent } from "src/tournament_event/entities/tournament-event.entity";
 
 @Entity()
 export class Player {
@@ -20,4 +21,7 @@ export class Player {
 
     @OneToMany(() => TournamentScore, (tournamentScore) => tournamentScore.player)
     tournamentScores: TournamentScore[]; 
+
+    @OneToMany(() => TournamentEvent, (event) => event.player)
+tournamentEvents: TournamentEvent[];
 }

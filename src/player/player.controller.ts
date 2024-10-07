@@ -9,7 +9,7 @@ import { ApiTags } from '@nestjs/swagger';
 export class PlayerController {
   constructor(private readonly playerService: PlayerService) {}
 
-  @Post()
+  @Post('register')
   async createPlayer(@Body() createPlayerDto: CreateUserDto): Promise<Player> {
     try {
       return await this.playerService.createPlayer(createPlayerDto);

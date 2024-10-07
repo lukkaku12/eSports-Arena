@@ -19,18 +19,4 @@ export class ResultsController {
     return this.resultsService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.resultsService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateResultDto: UpdateResultDto) {
-    return this.resultsService.update(+id, updateResultDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.resultsService.remove(+id);
-  }
 }

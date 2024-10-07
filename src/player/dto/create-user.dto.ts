@@ -1,4 +1,4 @@
-import { IsDate, IsString } from "class-validator";
+import { IsString } from "class-validator";
 import { CreateDateColumn, PrimaryGeneratedColumn } from "typeorm";
 
 
