@@ -30,16 +30,16 @@ export class TournamentService {
   }
 
   async update(id: number, updateTournamentDto: UpdateTournamentDto): Promise<Tournament> {
-    const tournament = await this.findOne(id); // Verifica si existe el torneo
+    const tournament = await this.findOne(id); 
 
-    // Actualiza los campos del torneo
+    
     Object.assign(tournament, updateTournamentDto);
     
     return await this.tournamentRepository.save(tournament);
   }
 
   async remove(id: number): Promise<void> {
-    const tournament = await this.findOne(id); // Verifica si existe el torneo
+    const tournament = await this.findOne(id); 
 
     await this.tournamentRepository.remove(tournament);
   }

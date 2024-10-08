@@ -1,17 +1,16 @@
-import { IsNotEmpty, IsUUID, IsNumber } from 'class-validator';
+import { IsNotEmpty, IsNumber } from 'class-validator';
 
 export class CreateTournamentScoreDto {
-    @IsNotEmpty()
-    @IsUUID()
-    tournament_id: string;
 
     @IsNotEmpty()
-    @IsUUID()
-    playerId: string;
+    @IsNumber()
+    tournament_id: number;
+
+    @IsNotEmpty()
+    @IsNumber()
+    playerId: number;
 
     @IsNotEmpty()
     @IsNumber()
     score: number;
-
-
 }

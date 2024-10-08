@@ -11,12 +11,12 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
 
-  @UseGuards(LocalAuthGuard) // Usa el LocalAuthGuard para el login
+  @UseGuards(LocalAuthGuard) 
   @Post('login')
   async login(@Request() req) {
     console.log(req.user)
     return this.authService.login(req.user);
-     // El usuario ya ha sido validado
+     
   }
 
 }

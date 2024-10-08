@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { TournamentEvent } from './entities/tournament-event.entity'; // Adjust the path as needed
+import { TournamentEvent } from './entities/tournament-event.entity';
 
 @Injectable()
 export class TournamentEventService {
