@@ -1,68 +1,66 @@
-import { Injectable, BadRequestException, HttpStatus } from '@nestjs/common';
+import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Player } from './entities/player.entity'; // Asegúrate de tener la entidad Player importada correctamente
-import { CreateUserDto } from './dto/create-user.dto'; // Cambiar si tienes un DTO específico para crear jugadores
-import * as bcrypt from 'bcrypt'; // Importa bcrypt para la encriptación de contraseñas
-import { TournamentScore } from 'src/tournament-score/entities/tournament-score.entity'; // Asegúrate de importar correctamente
+import { Player } from './entities/player.entity'; // Ensure the path is correct
+import { CreateUserDto } from './dto/create-user.dto'; // Ensure you have the appropriate DTO for creating players
+import * as bcrypt from 'bcrypt'; // Import bcrypt for password hashing
+import { TournamentScore } from 'src/tournament-score/entities/tournament-score.entity';
 
 @Injectable()
 export class PlayerService {
   constructor(
     @InjectRepository(Player)
-    private readonly playerRepository: Repository<Player>, // Inyectamos el repositorio de TypeORM para Player
-    @InjectRepository(TournamentScore)
-    private readonly tournamentScoreRepository: Repository<TournamentScore>, // Inyectamos el repositorio de TypeORM para TournamentScore
+    private readonly playerRepository: Repository<Player>,
+    @InjectRepository(TournamentScore) private readonly tournamentScoreRepository: Repository<TournamentScore>, // Inject the TypeORM repository for Player
   ) {}
 
-  // Método para crear un jugador
+  // Method to create a player
   async createPlayer(createPlayerDto: CreateUserDto): Promise<Player> {
     const { name, email, password } = createPlayerDto;
 
-    // Verifica si el jugador ya existe
+    // Check if the player already exists
     const existingPlayer = await this.playerRepository.findOne({ where: { email } });
     if (existingPlayer) {
       throw new BadRequestException('Player with this email already exists');
     }
 
-    // Encripta la contraseña
+    // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Crea el nuevo jugador
+    // Create the new player
     const player = this.playerRepository.create({
       name,
       email,
       password: hashedPassword,
-      created_at: new Date(), // Genera la fecha automáticamente
     });
 
     return this.playerRepository.save(player);
   }
 
-  // Método para encontrar un jugador por email
+  // Method to find a player by email
   async findByEmail(email: string): Promise<Player | undefined> {
     return this.playerRepository.findOne({ where: { email } });
   }
 
-  // Método para encontrar un jugador por ID
+  // Method to find a player by ID
   async findById(id: number): Promise<Player | undefined> {
     return this.playerRepository.findOne({ where: { id } });
   }
 
-  // Método para actualizar un jugador
+  // Method to update a player
   async updatePlayer(id: number, updateData: Partial<CreateUserDto>): Promise<Player> {
     const player = await this.findById(id);
     if (!player) {
       throw new BadRequestException('Player not found');
     }
 
-    // Actualiza los datos del jugador
+    // Update the player's properties
     Object.assign(player, updateData);
 
     return this.playerRepository.save(player);
   }
 
-  // Método para eliminar un jugador
+  // Method to delete a player
   async deletePlayer(id: number): Promise<void> {
     const player = await this.findById(id);
     if (!player) {
@@ -72,18 +70,22 @@ export class PlayerService {
     await this.playerRepository.delete(id);
   }
 
-  // Método para encontrar jugadores por torneo
+  // Method to find all players
+  async findAll(): Promise<Player[]> {
+    return this.playerRepository.find();
+  }
+
   async findPlayersByTournament(tournamentId: number): Promise<Player[]> {
     const tournamentScores = await this.tournamentScoreRepository.find({
-      where: { tournament_id: tournamentId },
-      relations: ['player'], // Asegúrate de tener la relación adecuada en TournamentScore
+      where: { tournamentId: tournamentId },
+      relations: ['player'], // Ensure that the relation to Player is set up correctly in the TournamentScore entity
     });
 
     if (!tournamentScores.length) {
-      throw new BadRequestException(`No players found for tournament with id ${tournamentId}`);
+      throw new NotFoundException(`No players found for tournament with id ${tournamentId}`);
     }
 
-    // Extrae los jugadores únicos de los puntajes del torneo
+    // Extract unique player IDs from tournament scores
     const playerIds = tournamentScores.map(score => score.player.id);
     return this.playerRepository.findByIds(playerIds);
   }

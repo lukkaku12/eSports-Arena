@@ -1,9 +1,15 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, UseInterceptors } from '@nestjs/common';
 import { TournamentService } from './tournament.service';
 import { CreateTournamentDto } from './dto/create-tournament.dto';
 import { UpdateTournamentDto } from './dto/update-tournament.dto';
+import { ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/auth/guards/auth.guard';
+import { ResponseInterceptor } from 'src/common/interceptors/response.interceptor';
 
+@ApiTags('tournament')
+@UseGuards(JwtAuthGuard)
 @Controller('tournament')
+@UseInterceptors(ResponseInterceptor)
 export class TournamentController {
   constructor(private readonly tournamentService: TournamentService) {}
 

@@ -1,24 +1,23 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
-import { Tournament } from "src/tournament/entities/tournament.entity"; // Asegúrate de que la ruta sea correcta
-import { Player } from "src/player/entities/player.entity"; // Asegúrate de que la ruta sea correcta
+
+import { Tournament } from "src/tournament/entities/tournament.entity";
+import { Player } from "src/player/entities/player.entity";
+import { Entity, Column, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+
 
 @Entity()
 export class TournamentScore {
     @PrimaryGeneratedColumn()
     id: number;
-
-    @Column()
-    tournament_id: number;
-
-    @Column()
-    player_id: number;
-
+    
     @Column()
     score: number;
 
-    @ManyToOne(() => Tournament, (tournament) => tournament.tournamentScores)
-    tournament: Tournament;
+    @Column({ name: 'tournamentId' }) // Ensure this matches your column name
+    tournamentId: number;
 
-    @ManyToOne(() => Player, (player) => player.tournamentScores)
+    @ManyToOne(() => Player, player => player.tournamentScores) // Assuming Player has a tournamentScores property
     player: Player;
+
+    @ManyToOne(() => Tournament, tournament => tournament.tournamentScores) // Assuming Tournament has a tournamentScores property
+    tournament: Tournament;
 }

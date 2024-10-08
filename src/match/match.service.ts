@@ -17,7 +17,7 @@ export class MatchService {
   async generateMatches(tournamentId: number): Promise<Match[]> {
     const tournament = await this.tournamentService.findOne(tournamentId);
 
-    // Verifica si el torneo existe
+    // verifies if the tournament matches or exists
     if (!tournament) {
       throw new NotFoundException('Tournament not found');
     }

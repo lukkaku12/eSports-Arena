@@ -1,4 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
+import { Match } from "src/match/entities/match.entity"; // Ensure the path is correct
+import { Player } from "src/player/entities/player.entity"; // Ensure the path is correct
 
 @Entity()
 export class Result {
@@ -6,14 +8,14 @@ export class Result {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
-    match_id: number;
+    @ManyToOne(() => Match, (match) => match.results) // Ensure that `results` is defined in Match entity
+    match: Match;
 
-    @Column()
-    winner_id: number;
+    @ManyToOne(() => Player, { nullable: false }) // Ensure that the relationship is not nullable
+    winner: Player;
 
-    @Column()
-    loser_id: number;
+    @ManyToOne(() => Player, { nullable: false }) // Ensure that the relationship is not nullable
+    loser: Player;
 
     @Column()
     winner_score: number;

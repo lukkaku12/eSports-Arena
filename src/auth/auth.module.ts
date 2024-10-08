@@ -9,11 +9,12 @@ import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { LocalStrategy } from './strategies/local.strategy'; // Define tus estrategias
 import { JwtStrategy } from './strategies/jwt.strategy'; // Define tus estrategias
+import { TournamentScore } from 'src/tournament-score/entities/tournament-score.entity';
 
 @Module({
   imports: [
     ConfigModule,
-    TypeOrmModule.forFeature([Player]), // Registra la entidad Player
+    TypeOrmModule.forFeature([Player, TournamentScore]), // Registra la entidad Player
     PassportModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],

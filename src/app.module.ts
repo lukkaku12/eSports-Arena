@@ -11,27 +11,32 @@ import { Tournament } from './tournament/entities/tournament.entity';
 import { Player } from './player/entities/player.entity';
 import { ResultsModule } from './results/results.module';
 import { TournamentScoreModule } from './tournament-score/tournament-score.module';
+import { TournamentScore } from './tournament-score/entities/tournament-score.entity';
+import { TournamentEvent } from './tournament_event/entities/tournament-event.entity';
+import { Result } from './results/entities/result.entity';
 
 
 @Module({
   imports: [
-    ConfigModule.forRoot({isGlobal: true}), // Asegúrate de que ConfigModule esté importado
+    ConfigModule.forRoot({isGlobal: true}), 
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configservice: ConfigService) => ({
         type: 'postgres',
         host: configservice.get<string>('DB_HOST'),
-        port: +configservice.get<number>('DB_PORT'), // Convierte a número
+        port: +configservice.get<number>('DB_PORT'), 
         username: configservice.get<string>('DB_USERNAME'),
         password: configservice.get<string>('DB_PASSWORD'),
         database: configservice.get<string>('DB_NAME'),
-        entities: [Player, Tournament, Match],
-        synchronize: true, // Cambia a false en producción
+        entities: [Player, Tournament, Match, TournamentScore, TournamentEvent, Result],
+        synchronize: true, 
         ssl: {
           rejectUnauthorized: false,
         },
+        
       }),
+      
     }),
     PlayerModule, TournamentModule, MatchModule, TournamentEventModule, AuthModule, ResultsModule, TournamentScoreModule],
   controllers: [],
