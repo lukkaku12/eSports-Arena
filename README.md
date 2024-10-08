@@ -80,3 +80,10 @@ http://localhost:3000/docs
 ## Contributing
 
 If you would like to contribute to this project, please fork the repository and submit a pull request with your changes.
+
+## Planning / UML
+
+link to UML
+
+https://lucid.app/lucidchart/4367ae5b-ce67-4a28-a522-303927323c90/edit?viewport_loc=180%2C-341%2C2815%2C1429%2C0_0&invitationId=inv_b5e7d8fe-915a-4f76-bea2-b3f1bb493fc1
+
