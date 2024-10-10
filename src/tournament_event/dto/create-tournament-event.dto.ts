@@ -3,11 +3,11 @@ import { IsNotEmpty, IsNumber, IsDate } from 'class-validator';
 export class CreateTournamentEventDto {
   @IsNotEmpty()
   @IsNumber()
-  tournament_id: number; // Tournament ID associated with the event
+  tournamentId: number; // Tournament ID associated with the event
 
   @IsNotEmpty()
   @IsNumber()
-  player_id: number; // Player ID who joined the tournament
+  playerId: number; // Player ID who joined the tournament
 
   @IsNotEmpty()
   @IsDate()

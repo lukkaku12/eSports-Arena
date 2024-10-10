@@ -10,11 +10,12 @@ import { PassportModule } from '@nestjs/passport';
 import { LocalStrategy } from './strategies/local.strategy'; 
 import { JwtStrategy } from './strategies/jwt.strategy'; 
 import { TournamentScore } from 'src/tournament-score/entities/tournament-score.entity';
+import { TournamentEvent } from 'src/tournament_event/entities/tournament-event.entity';
 
 @Module({
   imports: [
     ConfigModule,
-    TypeOrmModule.forFeature([Player, TournamentScore]), 
+    TypeOrmModule.forFeature([Player, TournamentScore, TournamentEvent]), 
     PassportModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],

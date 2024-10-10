@@ -4,11 +4,13 @@ import { MatchService } from './match.service';
 import { ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/guards/auth.guard';
 import { ResponseInterceptor } from 'src/common/interceptors/response.interceptor';
+import { ApiKeyGuard } from 'src/auth/guards/x-api-key.guard';
 
 @ApiTags('matches')
 @UseGuards(JwtAuthGuard)
 @Controller('matches')
 @UseInterceptors(ResponseInterceptor)
+@UseGuards(ApiKeyGuard)
 export class MatchController {
   constructor(private readonly matchService: MatchService) {}
 

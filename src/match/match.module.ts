@@ -8,9 +8,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Player } from 'src/player/entities/player.entity';
 import { TournamentScore } from 'src/tournament-score/entities/tournament-score.entity';
 import { Tournament } from 'src/tournament/entities/tournament.entity';
+import { TournamentEvent } from 'src/tournament_event/entities/tournament-event.entity';
+import { Result } from 'src/results/entities/result.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Match, Player, TournamentScore, Tournament])],
+  imports: [TypeOrmModule.forFeature([Match, Player, TournamentScore, TournamentEvent, Tournament, Result])],
   controllers: [MatchController],
   providers: [MatchService, PlayerService, TournamentService],
 })
